@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2f6f95" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="かんたん家計簿" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="description" content="スマホで使えるシンプルな家計簿アプリ" />
+    <title>かんたん家計簿</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-labelledby="app-title">
+        <div>
+          <p class="eyebrow">Household Ledger</p>
+          <h1 id="app-title">かんたん家計簿</h1>
+        </div>
+        <label class="month-picker">
+          <span>表示月</span>
+          <input id="monthFilter" type="month" />
+        </label>
+      </section>
+
+      <section class="summary-grid" aria-label="月別サマリー">
+        <article class="summary income">
+          <span>収入</span>
+          <strong id="incomeTotal">¥0</strong>
+        </article>
+        <article class="summary expense">
+          <span>支出</span>
+          <strong id="expenseTotal">¥0</strong>
+        </article>
+        <article class="summary balance">
+          <span>残り</span>
+          <strong id="balanceTotal">¥0</strong>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <form id="entryForm" class="entry-form" autocomplete="off">
+          <div class="form-row type-row" role="radiogroup" aria-label="収支タイプ">
+            <label>
+              <input type="radio" name="type" value="expense" checked />
+              <span>支出</span>
+            </label>
+            <label>
+              <input type="radio" name="type" value="income" />
+              <span>収入</span>
+            </label>
+          </div>
+
+          <div class="form-grid">
+            <label>
+              日付
+              <input id="dateInput" type="date" required />
+            </label>
+            <label>
+              カテゴリ
+              <select id="categoryInput" required></select>
+            </label>
+            <label>
+              金額
+              <input id="amountInput" type="number" min="1" step="1" inputmode="numeric" placeholder="例: 1200" required />
+            </label>
+            <label>
+              メモ
+              <input id="memoInput" type="text" maxlength="40" placeholder="例: スーパー" />
+            </label>
+          </div>
+
+          <button class="primary-button" type="submit">追加する</button>
+        </form>
+
+        <section class="side-panel" aria-label="支出の内訳">
+          <div class="panel-head">
+            <h2>支出の内訳</h2>
+            <button id="exportButton" class="ghost-button" type="button">CSV出力</button>
+          </div>
+          <div id="categoryList" class="category-list"></div>
+        </section>
+      </section>
+
+      <section class="history" aria-labelledby="history-title">
+        <div class="panel-head">
+          <h2 id="history-title">入力履歴</h2>
+          <button id="clearMonthButton" class="text-button" type="button">この月を削除</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日付</th>
+                <th>区分</th>
+                <th>カテゴリ</th>
+                <th>メモ</th>
+                <th class="amount-cell">金額</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="entryTable"></tbody>
+          </table>
+          <p id="emptyState" class="empty-state">まだ入力がありません。</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
